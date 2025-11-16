@@ -58,7 +58,15 @@ function saveTask() {
 }
 
 function loadTask() {
-
+    const loadData = localStorage.getItem("task");
+    if (loadData) {
+        const data = JSON.parse(loadData);
+        data.forEach(function (item) {
+            tasks.length = 0;
+            tasks.push(item);
+        })
+    }
+    render();
 }
 
 taskForm.addEventListener("submit", handleSubmit);
