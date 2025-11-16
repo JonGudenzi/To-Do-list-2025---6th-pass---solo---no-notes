@@ -1,0 +1,73 @@
+const taskForm = document.getElementById("taskForm");
+const taskInput = document.getElementById("taskInput");
+const errorMsg = document.getElementById("errorMsg");
+const taskList = document.getElementById("taskList");
+
+let tasks = [];
+
+function addTask(text) {
+    const taskObj = {
+        text: text,
+        completed: false
+    }
+    tasks.push(taskObj);
+    render();
+    saveTask();
+}
+
+function render() {
+    taskList.innerHTML = "";
+    tasks.forEach(function(task, index) {
+        const li = document.createElement("li");
+        li.textContent = task.text;
+        li.dataset.index = index;
+        if (task.completed === true) {li.classList.add("completed");};
+        li.addEventListener("click", toggleTask);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        li.appendChild(deleteBtn);
+        deleteBtn.addEventListener("click", function(event) {
+            event.stopPropagation();
+
+        })
+        taskList.appendChild(li);
+    })
+}
+
+function toggleTask(event) {
+    const li = event.target;
+   const index = li.dataset.index;
+    tasks[index].completed = !tasks[index].completed;
+    render();
+    saveTask();
+}
+
+function deleteTask(index) {
+    tasks.splice(index, 1);
+    render();
+    saveTask();
+}
+
+function saveTask() {
+    
+}
+
+function loadTask() {
+    
+}
+
+taskForm.addEventListener("submit", handleSubmit);
+
+function handleSubmit(event) {
+event.preventDefault();
+const userInput = taskInput.value.trim();
+if (userInput === "") {
+    errorMsg.textContent = "Please enter a task";
+    taskInput.focus();
+    return;
+}
+errorMsg.textContent = "";
+addTask(userInput);
+render();
+}
+loadTask();
