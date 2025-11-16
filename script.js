@@ -53,7 +53,8 @@ function deleteTask(index) {
 }
 
 function saveTask() {
-
+    const saveData = JSON.stringify(tasks)
+    localStorage.setItem("task", saveData);
 }
 
 function loadTask() {
