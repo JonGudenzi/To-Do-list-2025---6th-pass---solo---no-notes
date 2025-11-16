@@ -61,8 +61,8 @@ function loadTask() {
     const loadData = localStorage.getItem("task");
     if (loadData) {
         const data = JSON.parse(loadData);
-        data.forEach(function (item) {
-            tasks.length = 0;
+        tasks.length = 0;
+        data.forEach(function(item) {
             tasks.push(item);
         })
     }
