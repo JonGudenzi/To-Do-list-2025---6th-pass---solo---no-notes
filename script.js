@@ -21,12 +21,14 @@ function render() {
         const li = document.createElement("li");
         li.textContent = task.text;
         li.dataset.index = index;
-        if (task.completed === true) { li.classList.add("completed"); };
+        if (task.completed) { 
+            li.classList.add("completed"); 
+        };
         li.addEventListener("click", toggleTask);
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "X";
         li.appendChild(deleteBtn);
-        deleteBtn.addEventListener("click", function (event) {
+        deleteBtn.addEventListener("click", function(event) {
             event.stopPropagation();
             const li = event.target.closest("li");
             const index = li.dataset.index;
@@ -46,8 +48,6 @@ function toggleTask(event) {
 
 function deleteTask(index) {
     tasks.splice(index, 1);
-    taskInput.value = "";
-    taskInput.focus();
     render();
     saveTask();
 }
@@ -83,6 +83,5 @@ function handleSubmit(event) {
     taskInput.value = "";
     taskInput.focus();
     addTask(userInput);
-    render();
 }
 loadTask();
