@@ -33,7 +33,7 @@ function buildLi(task, index) {
   deleteBtn.classList.add("delete-btn");
   li.appendChild(deleteBtn);
 
-  // Delete behavior lives here now
+  // Delete behavior
   deleteBtn.addEventListener("click", function (event) {
     event.stopPropagation();
     const li = event.target.closest("li");
