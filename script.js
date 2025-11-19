@@ -17,37 +17,43 @@ function addTask(text) {
 
 function buildLi(task, index) {
   const li = document.createElement("li");
-    li.textContent = task.text;
-   li.dataset.index = index;
+  li.textContent = task.text;
+  li.dataset.index = index;
+
   if (task.completed) {
-      li.classList.add("completed");
-    }
+    li.classList.add("completed");
+  }
+
+  // Toggle when clicking the li
   li.addEventListener("click", toggleTask);
+
+  // Delete button
   const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "X";
-    deleteBtn.classList.add("delete-btn");
-    li.appendChild(deleteBtn);
+  deleteBtn.textContent = "X";
+  deleteBtn.classList.add("delete-btn");
+  li.appendChild(deleteBtn);
+
+  // Delete behavior lives here now
+  deleteBtn.addEventListener("click", function (event) {
+    event.stopPropagation();
+    const li = event.target.closest("li");
+    const index = li.dataset.index;
+    deleteTask(index);
+  });
+
   return li;
 }
 
 function render() {
   taskList.innerHTML = "";
-   tasks.forEach(function (task, index) {
+  tasks.forEach(function (task, index) {
     const li = buildLi(task, index);
-     const deleteBtn = li.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", function (event) {
-      event.stopPropagation();
-      const li = event.target.closest("li");
-      const index = li.dataset.index;
-      deleteTask(index);
-    });
     taskList.appendChild(li);
-    return li;
   });
 }
 
 function toggleTask(event) {
-  const li = event.target;
+  const li = event.target.closest("li");
   const index = li.dataset.index;
   tasks[index].completed = !tasks[index].completed;
   render();
@@ -92,4 +98,5 @@ function handleSubmit(event) {
   taskInput.focus();
   addTask(userInput);
 }
+
 loadTask();
